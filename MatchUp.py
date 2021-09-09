@@ -14,22 +14,32 @@ def findLeader():
     :return:
     """
 
-    people = bc.getAnswersFromFile("INPUT THE FILENAME")
+    people = bc.getAnswersFromFile("SUS Buddy Program Sign-Up Form (Responses) - Form Responses 1.tsv")
 
     fobj = open("Matched_Buddies_To_Leaders.txt", 'w', encoding='utf-8')
     buddyToLeader = {}
+    # looping through all the buddies and setting to find the proper leader
     for buddy in people[0]:
-        cosMin = 10
+        cosHigh = -10
+        # looping through the leaders to find the smallest cosine similarity meaning best match
         for leader in people[1]:
             cosSim = np.dot(buddy.vector, leader.vector)
             cosSim = cosSim/(np.linalg.norm(buddy.vector)*np.linalg.norm(leader.vector))
             cosSim = cosSim*(0.95**leader.numBuddies)
-            if cosMin > cosSim:
-                cosMin = cosSim
+            print(leader.name + str(cosSim))
+            print("===========================================================")
+            if cosHigh < cosSim:
+                cosHigh = cosSim
                 bestLeader = leader
+        print('///////////////////////////////////////////////////////////////////////////////////////')
+        print('///////////////////////////////////////////////////////////////////////////////////////')
 
         bestLeader.numBuddies += 1
         buddyToLeader[buddy] = bestLeader
-        fobj.write("Buddy: " + buddy.name + "\t email: " + buddy.email + '\t pronouns: ' + buddy.pronouns + '\t concerns: ' + buddy.concerns + '\n')
-        fobj.write("Leader: " + bestLeader.name + "\t email: " + bestLeader.email + '\t pronouns: ' + bestLeader.pronouns + '\t concerns: ' + bestLeader.concerns + '\n')
-        fobj.write("==================================================================================================")
+        fobj.write("Buddy: " + buddy.name + "\t email: " + buddy.email + '\t pronouns: ' + buddy.pronouns + '\n')
+        fobj.write("Leader: " + bestLeader.name + "\t email: " + bestLeader.email + '\t pronouns: ' + bestLeader.pronouns + '\n')
+        fobj.write("Cos Sim: " + str(cosHigh) + "\n")
+        fobj.write("================================================================================================== \n")
+
+
+findLeader()

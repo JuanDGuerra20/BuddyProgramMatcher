@@ -7,22 +7,20 @@ import numpy as np
 
 class Buddy:
 
-    def __init__(self, name, pronouns, email, vector, concerns):
+    def __init__(self, name, pronouns, email, vector, ):
         self.name = name
         self.pronouns = pronouns
         self.email = email
         self.vector = vector  # This will be the person's responses to all the questions
-        self.concerns = concerns
 
 
 class Leader:
 
-    def __init__(self, name, pronouns, email, vector, concerns):
+    def __init__(self, name, pronouns, email, vector):
         self.name = name
         self.pronouns = pronouns
         self.email = email
         self.vector = vector
-        self.concerns = concerns
         self.numBuddies = 0
 
 
@@ -48,13 +46,13 @@ def getAnswersFromFile(fileTSV):
             continue
 
         vector = np.zeros(13)
-        for i in range(4, 16):
+        for i in range(5, 17):
             if info[i] == 'Yes':
-                vector[i - 4] = 1
+                vector[i - 5] = 1
         if info[1] == "Incoming Buddy":
 
-            leaders.append(Leader(info[1], info[2], info[3], vector, info[17]))
+            leaders.append(Leader(info[2], info[3], info[4], vector))
         else:
-            buddies.append(Buddy(info[1], info[2], info[3], vector, info[17]))
+            buddies.append(Buddy(info[2], info[3], info[4], vector))
 
     return [buddies, leaders]
