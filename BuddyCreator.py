@@ -51,8 +51,8 @@ def getAnswersFromFile(fileTSV):
                 vector[i - 5] = 1
         if info[1] == "Incoming Buddy":
 
-            leaders.append(Leader(info[2], info[3], info[4], vector))
-        else:
             buddies.append(Buddy(info[2], info[3], info[4], vector))
+        else:
+            leaders.append(Leader(info[2], info[3], info[4], vector))
 
     return [buddies, leaders]

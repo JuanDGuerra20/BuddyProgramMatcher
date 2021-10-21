@@ -1,6 +1,6 @@
 """
 This file takes the info from the BuddyCreator file and will match leaders and buddies according to their responses to
-the form that was sent out
+the form that was sent o
 Created by Juan David Guerra, McGill University
 """
 import numpy as np
@@ -25,7 +25,7 @@ def findLeader():
         for leader in people[1]:
             cosSim = np.dot(buddy.vector, leader.vector)
             cosSim = cosSim/(np.linalg.norm(buddy.vector)*np.linalg.norm(leader.vector))
-            cosSim = cosSim*(0.95**leader.numBuddies)
+            cosSim = cosSim*(0.85**leader.numBuddies)
             print(leader.name + str(cosSim))
             print("===========================================================")
             if cosHigh < cosSim:
@@ -41,5 +41,6 @@ def findLeader():
         fobj.write("Cos Sim: " + str(cosHigh) + "\n")
         fobj.write("================================================================================================== \n")
 
+    fobj.close()
 
 findLeader()
